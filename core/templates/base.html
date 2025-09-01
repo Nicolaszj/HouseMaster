@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
         }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column h-100">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
@@ -46,23 +46,35 @@
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a href="#" class="btn btn-outline-primary me-2">Iniciar Sesión</a>
-                        <a href="#" class="btn btn-primary">Registrarse</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'account' %}" class="btn btn-outline-secondary me-2">
+                                <i class="bi bi-person-fill"></i> Mi Perfil
+                            </a>
+                            <form action="{% url 'logout' %}" method="POST" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+                            </form>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-outline-primary me-2">Iniciar Sesión</a>
+                            <a href="{% url 'signup' %}" class="btn btn-primary">Registrarse</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container mt-4">
-        {% block content %}
-        <!-- El contenido específico de cada página se inserta aquí -->
-        {% endblock %}
+    <main class="flex-shrink-0">
+        <div class="container mt-4">
+            {% block content %}
+            <!-- El contenido específico de cada página se inserta aquí -->
+            {% endblock %}
+        </div>
     </main>
 
     <footer class="footer mt-auto py-3 text-center">
         <div class="container">
-            <span>© 2024 Inmobiliaria. Todos los derechos reservados.</span>
+            <span>© 2025 HouseMaster. Todos los derechos reservados.</span>
         </div>
     </footer>
 
