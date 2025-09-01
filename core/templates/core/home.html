@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="row text-center mb-5">
+    <div class="col-12">
+        <h1 class="display-4 fw-bold">Encuentra tu próximo hogar </h1>
+        <p class="lead text-muted">Explora una amplia variedad de propiedades, desde acogedores apartamentos hasta espaciosas casas.</p>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <!-- Tarjeta de ejemplo para una propiedad -->
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <img src="https://placehold.co/600x400/E9ECEF/ADB5BD?text=Propiedad+1" class="card-img-top" alt="Propiedad en venta">
+            <div class="card-body">
+                <h5 class="card-title">Apartamento Moderno</h5>
+                <p class="card-text text-muted">3 habitaciones, 2 baños, 120m²</p>
+                <p class="h4 text-primary">$350.000</p>
+                <a href="#" class="btn btn-primary w-100">Ver Detalles</a>
+            </div>
+        </div>
+    </div>
+    <!-- Tarjeta de ejemplo para otra propiedad -->
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <img src="https://placehold.co/600x400/E9ECEF/ADB5BD?text=Propiedad+2" class="card-img-top" alt="Propiedad en venta">
+            <div class="card-body">
+                <h5 class="card-title">Casa Familiar</h5>
+                <p class="card-text text-muted">4 habitaciones, 3 baños, 200m²</p>
+                <p class="h4 text-primary">$500.000</p>
+                <a href="#" class="btn btn-primary w-100">Ver Detalles</a>
+            </div>
+        </div>
+    </div>
+    <!-- Tarjeta de ejemplo para una tercera propiedad -->
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <img src="https://placehold.co/600x400/E9ECEF/ADB5BD?text=Propiedad+3" class="card-img-top" alt="Propiedad en venta">
+            <div class="card-body">
+                <h5 class="card-title">Penthouse de Lujo</h5>
+                <p class="card-text text-muted">2 habitaciones, 2 baños, 150m²</p>
+                <p class="h4 text-primary">$750.000</p>
+                <a href="#" class="btn btn-primary w-100">Ver Detalles</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
