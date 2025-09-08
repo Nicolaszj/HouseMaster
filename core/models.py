@@ -19,6 +19,19 @@ class Property(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.city}"
+    
+class PropertyImage(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='properties/gallery/')
+    caption = models.CharField(max_length=150, blank=True)
+    is_cover = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-is_cover', 'id']  # portada primero
+
+    def __str__(self):
+        return f"Foto de {self.property.title}"
+
 
 
 class Visit(models.Model):

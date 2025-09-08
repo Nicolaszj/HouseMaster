@@ -27,7 +27,7 @@
                         {{ prop.rooms }} habitaciones, {{ prop.bathrooms }} baños, {{ prop.area }} m²
                     </p>
                     <p class="h4 text-primary">${{ prop.price|floatformat:0|intcomma }}</p>
-                    <a href="#" class="btn btn-primary w-100">Ver Detalles</a>
+                    <a href="{% url 'property_detail' prop.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
                 </div>
             </div>
         </div>
