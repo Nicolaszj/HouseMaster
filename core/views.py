@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Property
 
 def home(request):
     """
@@ -6,4 +7,5 @@ def home(request):
     
     Renderiza la plantilla home.html.
     """
-    return render(request, 'core/home.html')
+    properties = Property.objects.all()
+    return render(request, 'core/home.html', {'properties': properties})
