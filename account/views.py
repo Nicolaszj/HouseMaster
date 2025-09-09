@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm
 from django.contrib.auth import login as auth_login, logout as auth_logout
-
+#Nicolás Zapata Jurado
 def signup(request):
     """
     Vista para el registro de nuevos usuarios.

@@ -1,0 +1,51 @@
+title,description,price,type,area,rooms,bathrooms,status,city,department,address,image
+Apartamento en El Poblado,Amplio apartamento con vista panorámica,3500000,Arriendo,95.0,2,2,Disponible,Medellín,Antiquia,Calle 10A #36-50,properties/property_rent.jpg
+Casa en Envigado,Hermosa casa unifamiliar con jardín,550000000,Venta,180.5,4,3,Disponible,Envigado,Antioquia,Carrera 45 #34 Sur-12,properties/property_sale.jpg
+Apartamento en Laureles,Apartamento moderno cerca a la universidad,280000000,Venta,80.0,3,2,Disponible,Medellín,Antioquia,Circular 73A #39-25,properties/property_sale.jpg
+Casa campestre,Finca con piscina y zona de BBQ,7000000,Arriendo,250.0,3,3,Disponible,La Ceja,Antioquia,Vereda Las Palmas,properties/property_rent.jpg
+Finca en Santa Elena,Espectacular finca para descansar,980000000,Venta,500.0,5,4,Disponible,Medellín,Antioquia,Vereda El Placer,properties/property_sale.jpg
+Apartamento en Sabaneta,Acogedor apartamento con balcón,2500000,Arriendo,75.0,2,1,Disponible,Sabaneta,Antioquia,Calle 77 Sur #40-15,properties/property_rent.jpg
+Loft en El Centro,Loft ideal para una pareja,180000000,Venta,55.0,1,1,Disponible,Medellín,Antioquia,Carrera 46 #52-20,properties/property_sale.jpg
+Casa en Rionegro,Casa en conjunto cerrado,3800000,Arriendo,150.0,3,2,Disponible,Rionegro,Antioquia,Kilometro 5 Vía San Antonio,properties/property_rent.jpg
+Apartamento en Belén,Apartamento familiar en sector tranquilo,220000000,Venta,85.0,3,2,Disponible,Medellín,Antioquia,Carrera 76 #20-55,properties/property_sale.jpg
+Apartamento en Bello,Apartamento con excelentes acabados,1500000,Arriendo,65.0,2,1,Disponible,Bello,Antioquia,Calle 50 #60-32,properties/property_rent.jpg
+Casa en La Estrella,Casa con amplias zonas verdes,650000000,Venta,220.0,4,4,Disponible,La Estrella,Antioquia,Carrera 51 #80 Sur-45,properties/property_sale.jpg
+Apartamento en Itagüí,Apartamento en unidad residencial,1800000,Arriendo,70.0,3,2,Disponible,Itagüí,Antioquia,Calle 36 #50-10,properties/property_rent.jpg
+Apartamento en Copacabana,Apartamento con vista al río,250000000,Venta,90.0,2,2,Disponible,Copacabana,Antioquia,Carrera 50 #65-15,properties/property_sale.jpg
+Apartamento en Girardota,Apartamento en conjunto con piscina,1200000,Arriendo,60.0,2,1,Disponible,Girardota,Antioquia,Calle 8 #1-25,properties/property_rent.jpg
+Casa en Marinilla,Casa con diseño moderno,450000000,Venta,160.0,3,3,Disponible,Marinilla,Antioquia,Carrera 30 #28-50,properties/property_sale.jpg
+Apartamento en Guarne,Apartamento con ambiente campestre,900000,Arriendo,55.0,1,1,Disponible,Guarne,Antioquia,Vía Guarne-La Ceja,properties/property_rent.jpg
+Apartamento en Envigado,Apartamento con acabados de lujo,300000000,Venta,100.0,3,2,Disponible,Envigado,Antioquia,Carrera 48 #37 Sur-30,properties/property_sale.jpg
+Apartamento en Caldas,Apartamento en sector residencial,1400000,Arriendo,70.0,2,2,Disponible,Caldas,Antioquia,Calle 120 Sur #49-10,properties/property_rent.jpg
+Apartamento en Bello,Apartamento para estrenar,200000000,Venta,75.0,3,2,Disponible,Bello,Antioquia,Carrera 45 #25-10,properties/property_sale.jpg
+Apartamento en Sabaneta,Apartamento en piso alto con balcón,2800000,Arriendo,85.0,3,2,Disponible,Sabaneta,Antioquia,Calle 77 Sur #40-25,properties/property_rent.jpg
+Casa en El Retiro,Casa con excelente ubicación,750000000,Venta,200.0,4,3,Disponible,El Retiro,Antioquia,Vereda Pantanillo,properties/property_sale.jpg
+Apartamento en Medellín,Apartamento amueblado,2000000,Arriendo,60.0,2,1,Disponible,Medellín,Antioquia,Calle 50 #43-15,properties/property_rent.jpg
+Apartamento en Itagüí,Apartamento con cocina integral,150000000,Venta,65.0,2,1,Disponible,Itagüí,Antioquia,Calle 36 #50-20,properties/property_sale.jpg
+Apartamento en Envigado,Apartamento con terraza privada,3500000,Arriendo,110.0,3,2,Disponible,Envigado,Antioquia,Carrera 48 #37 Sur-40,properties/property_rent.jpg
+Casa en Medellín,Casa con piscina en conjunto,850000000,Venta,280.0,5,4,Disponible,Medellín,Antioquia,Carrera 43A #1 Sur-50,properties/property_sale.jpg
+Apartamento en Rionegro,Apartamento en unidad campestre,2500000,Arriendo,80.0,2,2,Disponible,Rionegro,Antioquia,Kilometro 5 Vía Llano Grande,properties/property_rent.jpg
+Apartamento en Sabaneta,Apartamento con vista a la montaña,280000000,Venta,90.0,3,2,Disponible,Sabaneta,Antioquia,Calle 77 Sur #40-30,properties/property_sale.jpg
+Casa en Medellín,Casa para restaurar,1200000,Arriendo,150.0,3,2,Disponible,Medellín,Antioquia,Calle 50 #43-20,properties/property_rent.jpg
+Apartamento en Envigado,Apartamento con gimnasio,320000000,Venta,100.0,3,2,Disponible,Envigado,Antioquia,Carrera 48 #37 Sur-50,properties/property_sale.jpg
+Apartamento en Laureles,Apartamento amueblado para ejecutivo,2500000,Arriendo,65.0,1,1,Disponible,Medellín,Antioquia,Circular 73A #39-30,properties/property_rent.jpg
+Casa en Bello,Casa con gran patio,420000000,Venta,180.0,4,3,Disponible,Bello,Antioquia,Calle 50 #60-40,properties/property_sale.jpg
+Apartamento en Itagüí,Apartamento con balcón,1800000,Arriendo,75.0,2,2,Disponible,Itagüí,Antioquia,Calle 36 #50-30,properties/property_rent.jpg
+Casa en Sabaneta,Casa en zona residencial,580000000,Venta,200.0,4,3,Disponible,Sabaneta,Antioquia,Carrera 45 #80 Sur-50,properties/property_sale.jpg
+Apartamento en Envigado,Apartamento con piscina,4000000,Arriendo,120.0,3,3,Disponible,Envigado,Antioquia,Carrera 48 #37 Sur-60,properties/property_rent.jpg
+Apartamento en Medellín,Apartamento en unidad completa,350000000,Venta,110.0,3,2,Disponible,Medellín,Antioquia,Carrera 43A #1 Sur-60,properties/property_sale.jpg
+Apartamento en Rionegro,Apartamento cerca al aeropuerto,2200000,Arriendo,70.0,2,1,Disponible,Rionegro,Antioquia,Vía al Aeropuerto,properties/property_rent.jpg
+Casa en El Poblado,Casa con diseño exclusivo,950000000,Venta,250.0,5,5,Disponible,Medellín,Antioquia,Calle 10A #36-60,properties/property_sale.jpg
+Apartamento en Sabaneta,Apartamento con parqueadero doble,3000000,Arriendo,95.0,3,2,Disponible,Sabaneta,Antioquia,Calle 77 Sur #40-40,properties/property_rent.jpg
+Apartamento en La Ceja,Apartamento con vista a la naturaleza,250000000,Venta,85.0,2,2,Disponible,La Ceja,Antioquia,Vereda Las Palmas,properties/property_sale.jpg
+Apartamento en Bello,Apartamento con transporte público cercano,1800000,Arriendo,70.0,2,1,Disponible,Bello,Antioquia,Calle 50 #60-50,properties/property_rent.jpg
+Casa en Guarne,Casa campestre con gran jardín,600000000,Venta,300.0,4,3,Disponible,Guarne,Antioquia,Vereda El Placer,properties/property_sale.jpg
+Apartamento en Caldas,Apartamento en conjunto cerrado,1600000,Arriendo,80.0,3,2,Disponible,Caldas,Antioquia,Calle 120 Sur #49-20,properties/property_rent.jpg
+Apartamento en Envigado,Apartamento con terraza privada,380000000,Venta,120.0,3,3,Disponible,Envigado,Antioquia,Carrera 48 #37 Sur-70,properties/property_sale.jpg
+Apartamento en Sabaneta,Apartamento en piso bajo,2500000,Arriendo,80.0,2,2,Disponible,Sabaneta,Antioquia,Calle 77 Sur #40-50,properties/property_rent.jpg
+Apartamento en Itagüí,Apartamento en zona tranquila,160000000,Venta,70.0,2,1,Disponible,Itagüí,Antioquia,Calle 36 #50-40,properties/property_sale.jpg
+Apartamento en Rionegro,Apartamento en unidad con turco y sauna,2800000,Arriendo,90.0,3,2,Disponible,Rionegro,Antioquia,Kilometro 5 Vía San Antonio,properties/property_rent.jpg
+Casa en Medellín,Casa con vista a la ciudad,780000000,Venta,220.0,4,4,Disponible,Medellín,Antioquia,Carrera 43A #1 Sur-70,properties/property_sale.jpg
+Apartamento en El Poblado,Apartamento cerca al Parque Lleras,4500000,Arriendo,100.0,2,2,Disponible,Medellín,Antioquia,Calle 10A #36-70,properties/property_rent.jpg
+Casa en Envigado,Casa con estudio y oficina,620000000,Venta,210.0,5,4,Disponible,Envigado,Antioquia,Carrera 45 #34 Sur-22,properties/property_sale.jpg
+Apartamento en Laureles,Apartamento con excelente iluminación,3000000,Arriendo,85.0,2,2,Disponible,Medellín,Antioquia,Circular 73A #39-40,properties/property_rent.jpg
