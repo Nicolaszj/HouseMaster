@@ -11,14 +11,18 @@
                     <h2 class="card-title text-center mb-4 text-primary">Editar Perfil</h2>
                     <form method="POST">
                         {% csrf_token %}
-                        
-                        <h5 class="mt-4">Datos de Usuario</h5>
-                        {{ user_form.as_p }}
-
-                        <h5 class="mt-4">Datos de Perfil</h5>
-                        {{ profile_form.as_p }}
-
-                        <div class="d-grid gap-2 mt-4">
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    {% for error in field.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn-lg">
                                 Guardar Cambios
                             </button>
