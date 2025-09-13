@@ -7,6 +7,8 @@ urlpatterns = [
     path('propiedades/<int:propiedad_id>/', views.propiedad_detalle, name='propiedad_detalle'),
     path('contacto/', views.contacto, name='contacto'),
     path('perfil/', views.perfil, name='account'),
+    path('chat-api/', views.chatbot_api, name='chat_api'),
+    path('chatbot/', views.chatbot_api, name='chatbot_api'),
 
     # 🔑 auth
     path('signup/', views.signup, name='signup'),

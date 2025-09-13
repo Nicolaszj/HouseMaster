@@ -6,7 +6,6 @@
     <title>{% block title %}Inmobiliaria{% endblock %}</title>
     <!-- Enlaces a Bootstrap CSS y otros recursos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Iconos de Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         body {
@@ -20,6 +19,66 @@
             background-color: #343a40;
             color: white;
             padding: 2rem 0;
+        }
+
+        /* Chatbot flotante */
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+        }
+        #chatbot-box {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            display: none;
+            z-index: 1040;
+        }
+        #chatbot-box .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        #chatbot-box .card-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+        #chatbot-box input {
+            border: none;
+            border-top: 1px solid #dee2e6;
+            padding: 0.5rem;
+            width: 100%;
+        }
+        .chat-msg {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .chat-msg.user {
+            background-color: #0d6efd;
+            color: white;
+            align-self: flex-end;
+        }
+        .chat-msg.bot {
+            background-color: #e9ecef;
+            color: black;
+            align-self: flex-start;
         }
     </style>
 </head>
@@ -47,9 +106,7 @@
                     </ul>
                     <div class="d-flex">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'account' %}" class="btn btn-outline-secondary me-2">
-                                <i class="bi bi-person-fill"></i> Mi Perfil
-                            </a>
+                            <i class="bi bi-person-fill"></i> Mi Perfil
                             <form action="{% url 'logout' %}" method="POST" class="d-inline">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
@@ -67,7 +124,7 @@
     <main class="flex-shrink-0">
         <div class="container mt-4">
             {% block content %}
-            <!-- El contenido específico de cada página se inserta aquí -->
+            <!-- Contenido específico -->
             {% endblock %}
         </div>
     </main>
@@ -78,7 +135,61 @@
         </div>
     </footer>
 
+    <!-- Chatbot -->
+    <button id="chatbot-toggle"><i class="bi bi-chat-dots-fill"></i></button>
+    <div id="chatbot-box">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">Asistente 🏡</div>
+            <div class="card-body d-flex flex-column" id="chat-body"></div>
+            <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." autocomplete="off">
+        </div>
+    </div>
+
     <!-- Scripts de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script del chatbot -->
+    <script>
+        const toggleBtn = document.getElementById('chatbot-toggle');
+        const chatbotBox = document.getElementById('chatbot-box');
+        const chatBody = document.getElementById('chat-body');
+        const chatInput = document.getElementById('chat-input');
+
+        toggleBtn.addEventListener('click', () => {
+            chatbotBox.style.display = chatbotBox.style.display === 'none' ? 'block' : 'none';
+        });
+
+        function addMessage(message, sender="user") {
+            const p = document.createElement("div");
+            p.textContent = message;
+            p.className = `chat-msg ${sender}`;
+            chatBody.appendChild(p);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        chatInput.addEventListener('keypress', function(e){
+            if(e.key === 'Enter' && chatInput.value.trim() !== "") {
+                const msg = chatInput.value;
+                addMessage(msg, "user");
+                chatInput.value = "";
+
+                fetch("{% url 'chatbot_api' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({ message: msg })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    addMessage(data.reply, "bot");
+                })
+                .catch(err => {
+                    addMessage("Error al conectarse con el chatbot.", "bot");
+                });
+            }
+        });
+    </script>
 </body>
 </html>

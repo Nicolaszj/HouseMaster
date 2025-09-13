@@ -2,6 +2,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import openai
+import json
+import os
+
+
+import openai
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.conf import settings
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 from .models import Propiedad
 
@@ -65,3 +79,24 @@ def propiedad_detalle(request, propiedad_id):
 # PÁGINA DE CONTACTO
 def contacto(request):
     return render(request, 'core/contacto.html')
+
+
+def chatbot_api(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        user_message = data.get("message", "")
+
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "Eres un asistente inmobiliario útil."},
+                    {"role": "user", "content": user_message}
+                ],
+                max_tokens=200
+            )
+            answer = response['choices'][0]['message']['content']
+            return JsonResponse({"reply": answer})
+        except Exception as e:
+            return JsonResponse({"reply": "Error al procesar tu solicitud."})
+    return JsonResponse({"reply": "Método no permitido."}, status=405)
