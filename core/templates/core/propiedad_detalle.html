@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ propiedad.titulo }} - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <img src="{{ propiedad.imagen|default:'https://placehold.co/800x600/E9ECEF/ADB5BD?text=Propiedad' }}"
+             class="img-fluid rounded shadow-sm w-100"
+             alt="{{ propiedad.titulo }}">
+    </div>
+    <div class="col-md-6">
+        <h1 class="fw-bold">{{ propiedad.titulo }}</h1>
+        <p class="text-muted">{{ propiedad.descripcion }}</p>
+
+        <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item"><strong>Habitaciones:</strong> {{ propiedad.habitaciones }}</li>
+            <li class="list-group-item"><strong>Baños:</strong> {{ propiedad.banos }}</li>
+            <li class="list-group-item"><strong>Metros cuadrados:</strong> {{ propiedad.metros_cuadrados }} m²</li>
+        </ul>
+
+        <h3 class="text-primary fw-bold">${{ propiedad.precio }}</h3>
+
+        <div class="mt-4">
+            <a href="{% url 'propiedades' %}" class="btn btn-secondary me-2">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+            <a href="#" class="btn btn-success">
+                <i class="bi bi-envelope-fill"></i> Contactar
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

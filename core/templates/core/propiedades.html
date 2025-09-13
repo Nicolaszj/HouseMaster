@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Propiedades - HouseMaster{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Propiedades</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for propiedad in propiedades %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <img src="{{ propiedad.imagen.url|default:'https://placehold.co/600x400/E9ECEF/ADB5BD?text=Propiedad' }}"
+                 class="card-img-top"
+                 alt="{{ propiedad.titulo }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ propiedad.titulo }}</h5>
+                <p class="card-text text-muted">{{ propiedad.descripcion|truncatewords:15 }}</p>
+                <p class="h4 text-primary">${{ propiedad.precio }}</p>
+                <a href="{% url 'propiedad_detalle' propiedad.id %}" class="btn btn-primary w-100">Ver Detalles</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center">
+        <p class="text-muted">No hay propiedades disponibles por ahora.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
