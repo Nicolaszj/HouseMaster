@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Agendar visita{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h4 mb-3">Agendar visita</h1>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} mb-3">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-3">{{ property.title }}</h5>
+
+      <!-- Formulario GET para cambiar el día -->
+      <form method="get" class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label class="form-label">Día</label>
+          <!-- Sin atributo 'min' para permitir volver a días anteriores;
+               la vista valida y corrige si es pasado -->
+          <input type="date"
+                 name="date"
+                 class="form-control"
+                 value="{{ selected_date|date:'Y-m-d' }}">
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="btn btn-outline-secondary">Ver horarios</button>
+        </div>
+      </form>
+
+      <!-- Formulario POST para agendar -->
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+        <!-- Mantener el día seleccionado -->
+        <input type="hidden" name="date" value="{{ selected_date|date:'Y-m-d' }}">
+
+        <div class="col-md-4">
+          <label class="form-label">Hora (1 hora)</label>
+          {{ form.time }}
+          {% if form.time.errors %}
+            <div class="text-danger small">{{ form.time.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Agendar</button>
+          <a href="{% url 'property_detail' property.pk %}" class="btn btn-outline-secondary">Volver</a>
+        </div>
+      </form>
+
+      {% if not form.fields.time.choices %}
+        <div class="alert alert-info mt-3">
+          No hay horarios disponibles para este día. Prueba con otra fecha.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

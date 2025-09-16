@@ -45,6 +45,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Contacto</a>
                         </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_visits' %}">Mis visitas</a>
+                        </li>
+                        {% endif %}
+                        
                     </ul>
                     <div class="d-flex">
                         {% if user.is_authenticated %}

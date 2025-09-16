@@ -60,6 +60,10 @@
 
     <h2 class="h5">Descripción</h2>
     <p>{{ property.description }}</p>
+
+    <a href="{% url 'visit_schedule' property.id %}" class="btn btn-success w-100">
+        Agendar visita
+    </a>
   </div>
 </div>
 {% endblock %}
