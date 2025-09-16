@@ -10,11 +10,28 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("propiedades", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
+        migrations.CreateModel(
+            name="Propiedad",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("titulo", models.CharField(max_length=200)),
+                ("descripcion", models.TextField()),
+                ("precio", models.DecimalField(decimal_places=2, max_digits=12)),
+                ("disponible", models.BooleanField(default=True)),
+            ],
+        ),
         migrations.CreateModel(
             name="Compra",
             fields=[
@@ -27,55 +44,21 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("fecha_compra", models.DateTimeField(auto_now_add=True)),
-                ("nombre", models.CharField(blank=True, max_length=100, null=True)),
-                ("telefono", models.CharField(blank=True, max_length=20, null=True)),
-                ("direccion", models.CharField(blank=True, max_length=200, null=True)),
-                (
-                    "propiedad",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="compras_core",
-                        to="propiedades.propiedad",
-                    ),
-                ),
-                (
-                    "usuario",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="compras_core",
-                        to=settings.AUTH_USER_MODEL,
-                    ),
-                ),
-            ],
-        ),
-        migrations.CreateModel(
-            name="CompraCore",
-            fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
                 ("fecha", models.DateTimeField(auto_now_add=True)),
                 (
-                    "propiedad",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="compras_core2",
-                        to="propiedades.propiedad",
-                    ),
-                ),
-                (
                     "usuario",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name="compras_core2",
+                        related_name="compras_propiedades",
                         to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "propiedad",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="compras_propiedades",
+                        to="propiedades.propiedad",
                     ),
                 ),
             ],

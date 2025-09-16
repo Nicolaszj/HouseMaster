@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar compra{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Confirmar compra</h2>
+    <p>Completa el formulario para comprar la propiedad 
+       <strong>{{ propiedad.titulo }}</strong> por 
+       <span class="text-primary">${{ propiedad.precio }}</span>.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Aquí se renderizan los campos del formulario -->
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">Confirmar Compra</button>
+        <a href="{% url 'propiedades' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
