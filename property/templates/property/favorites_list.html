@@ -10,16 +10,27 @@
             {% for prop in favorites %}
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    {# Aquí puedes reusar el diseño del "card" de property_list.html #}
                     {% if prop.image %}
-                        <img src="{{ prop.image.url }}" class="card-img-top" alt="{{ prop.title }}">
+                        <img src="{{ prop.image.url }}" class="card-img-top" alt="{{ prop.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">{{ prop.title }}</span>
+                        </div>
                     {% endif %}
-                    <div class="card-body">
-                         <div class="d-flex justify-content-between">
-                             <h5 class="card-title">{{ prop.title }}</h5>
-                             <a href="{% url 'remove_favorite' prop.id %}" class="text-danger"><i class="bi bi-heart-fill fs-5"></i></a>
-                         </div>
-                        <p class="card-text">{{ prop.city }}, {{ prop.department }}</p>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title">{{ prop.title }}</h5>
+                            <a href="{% url 'remove_favorite' prop.id %}" class="text-danger" title="Quitar de favoritos">
+                                <i class="bi bi-heart-fill fs-5"></i>
+                            </a>
+                        </div>
+                        <p class="card-text text-muted">
+                            {{ prop.city }}, {{ prop.department }}
+                        </p>
+                        <p class="fw-bold text-primary fs-5 mt-auto">
+                            {# Se quitó el filtro |intcomma #}
+                            ${{ prop.price|floatformat:0 }}
+                        </p>
                         <a href="{% url 'property_detail' prop.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
                     </div>
                 </div>
@@ -27,8 +38,8 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="alert alert-info">
-            Aún no has guardado ninguna propiedad como favorita. ¡Explora nuestro catálogo y añade algunas!
+        <div class="alert alert-info mt-4">
+            Aún no has guardado ninguna propiedad como favorita. ¡Explora nuestro <a href="{% url 'property_list' %}" class="alert-link">catálogo</a> y añade algunas!
         </div>
     {% endif %}
 </div>

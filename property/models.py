@@ -17,7 +17,7 @@ class Property(models.Model):
     department = models.CharField(max_length=100)
     address = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='media/properties/', blank=True, null=True)
+    image = models.ImageField(upload_to='properties/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.title} - {self.city}"
@@ -25,7 +25,7 @@ class Property(models.Model):
 
 class PropertyImage(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='media/properties/')
+    image = models.ImageField(upload_to='properties/')
     caption = models.CharField(max_length=150, blank=True)
     is_cover = models.BooleanField(default=False)
 

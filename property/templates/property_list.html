@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load humanize %}
 {% block title %}Propiedades{% endblock %}
 
 {% block content %}
@@ -15,17 +14,14 @@
                 {% endfor %}
             </select>
         </div>
-
         <div class="col-md-2">
             <input type="number" name="min_price" class="form-control"
                    placeholder="Precio mínimo" value="{{ request.GET.min_price }}" min="0">
         </div>
-
         <div class="col-md-2">
             <input type="number" name="max_price" class="form-control"
                    placeholder="Precio máximo" value="{{ request.GET.max_price }}" min="0">
         </div>
-
         <div class="col-md-2">
             <select name="rooms" class="form-select">
                 <option value="">Habitaciones (mín.)</option>
@@ -59,12 +55,10 @@
                         </div>
                     {% endif %}
                     <div class="card-body d-flex flex-column">
-                        
                         <div class="d-flex justify-content-between align-items-start">
                             <span class="badge {% if prop.type == 'Venta' %}bg-success{% else %}bg-primary{% endif %}">
                                 {{ prop.type }}
                             </span>
-                            
                             {% if user.is_authenticated and not user.is_staff %}
                                 {% if prop in user.profile.favorites.all %}
                                     <a href="{% url 'remove_favorite' prop.id %}" class="text-danger" title="Quitar de favoritos">
@@ -83,7 +77,7 @@
                             {{ prop.area }} m² – {{ prop.rooms }} hab. – {{ prop.bathrooms }} baños
                         </p>
                         <p class="fw-bold text-primary fs-5 mt-auto">
-                            ${{ prop.price|floatformat:0|intcomma }}
+                            ${{ prop.price|floatformat:0 }}
                         </p>
                         <a href="{% url 'property_detail' prop.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
                     </div>
@@ -102,9 +96,7 @@
                     </a>
                 </li>
                 {% endif %}
-
                 <li class="page-item active"><span class="page-link">{{ properties.number }}</span></li>
-
                 {% if properties.has_next %}
                 <li class="page-item">
                     <a class="page-link"
