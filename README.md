@@ -13,7 +13,6 @@ El proyecto está dividido en varias aplicaciones (apps) de Django:
 - `core/` → configuración principal y páginas base
 - `propiedades/` → manejo de propiedades (CRUD, detalle, filtros)
 - `compras/` → procesos de compra y pagos
-- `chatbot/` → integración de soporte conversacional
 ##  Requisitos
 - Python 3.10+
 - Django 5.x
