@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Mis Favoritos{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="h4 mb-4">Mis propiedades favoritas</h1>
+    
+    {% if favorites %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for prop in favorites %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    {# Aquí puedes reusar el diseño del "card" de property_list.html #}
+                    {% if prop.image %}
+                        <img src="{{ prop.image.url }}" class="card-img-top" alt="{{ prop.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                         <div class="d-flex justify-content-between">
+                             <h5 class="card-title">{{ prop.title }}</h5>
+                             <a href="{% url 'remove_favorite' prop.id %}" class="text-danger"><i class="bi bi-heart-fill fs-5"></i></a>
+                         </div>
+                        <p class="card-text">{{ prop.city }}, {{ prop.department }}</p>
+                        <a href="{% url 'property_detail' prop.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Aún no has guardado ninguna propiedad como favorita. ¡Explora nuestro catálogo y añade algunas!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

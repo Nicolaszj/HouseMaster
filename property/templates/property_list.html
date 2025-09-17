@@ -4,112 +4,121 @@
 
 {% block content %}
 <div class="container py-4">
-  <h1 class="h4 mb-4">Nuestras propiedades</h1>
+    <h1 class="h4 mb-4">Nuestras propiedades</h1>
 
-  <!-- filtros -->
-  <form method="get" class="row g-3 mb-4">
-    <div class="col-md-3">
-      <select name="city" class="form-select">
-        <option value="">Todas las ciudades</option>
-        {% for c in cities %}
-          <option value="{{ c }}" {% if request.GET.city == c %}selected{% endif %}>{{ c }}</option>
-        {% endfor %}
-      </select>
-    </div>
-
-    <div class="col-md-2">
-      <input type="number" name="min_price" class="form-control"
-             placeholder="Precio mínimo" value="{{ request.GET.min_price }}" min="0">
-    </div>
-
-    <div class="col-md-2">
-      <input type="number" name="max_price" class="form-control"
-             placeholder="Precio máximo" value="{{ request.GET.max_price }}" min="0">
-    </div>
-
-    <div class="col-md-2">
-      <select name="rooms" class="form-select">
-        <option value="">Habitaciones (mín.)</option>
-        {% for n in "12345" %}
-          <option value="{{ n }}" {% if request.GET.rooms == n %}selected{% endif %}>{{ n }}{% if n == "5" %}+{% endif %}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-3">
-      <div class="d-flex gap-2">
-        <select name="type" class="form-select">
-          <option value="">Todos los tipos</option>
-          <option value="Arriendo" {% if request.GET.type == "Arriendo" %}selected{% endif %}>Arriendo</option>
-          <option value="Venta" {% if request.GET.type == "Venta" %}selected{% endif %}>Venta</option>
-        </select>
-        <button type="submit" class="btn btn-primary">Buscar</button>
-      </div>
-    </div>
-  </form>
-
-  {% if properties %}
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      {% for prop in properties %}
-      <div class="col">
-        <div class="card h-100 shadow-sm">
-          {% if prop.image %}
-            <img src="{{ prop.image.url }}" class="card-img-top" alt="{{ prop.title }}">
-          {% else %}
-            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-              <span class="text-muted">{{ prop.title }}</span>
-            </div>
-          {% endif %}
-          <div class="card-body">
-            <p class="mb-2">
-              <span class="badge {% if prop.type == 'Venta' %}bg-success{% else %}bg-primary{% endif %}">
-                {{ prop.type }}
-              </span>
-            </p>
-
-            <h5 class="card-title">{{ prop.title }}</h5>
-            <p class="card-text">
-              {{ prop.city }}, {{ prop.department }} <br>
-              {{ prop.area }} m² – {{ prop.rooms }} hab. – {{ prop.bathrooms }} baños
-            </p>
-            <p class="fw-bold text-primary fs-5">
-              ${{ prop.price|floatformat:0|intcomma }}
-            </p>
-            <a href="{% url 'property_detail' prop.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
-          </div>
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-3">
+            <select name="city" class="form-select">
+                <option value="">Todas las ciudades</option>
+                {% for c in cities %}
+                    <option value="{{ c }}" {% if request.GET.city == c %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
         </div>
-      </div>
-      {% endfor %}
-    </div>
 
-    <!-- paginación -->
-    <nav aria-label="Paginación" class="mt-4">
-      <ul class="pagination justify-content-center">
-        {% if properties.has_previous %}
-          <li class="page-item">
-            <a class="page-link"
-               href="?page={{ properties.previous_page_number }}&city={{ request.GET.city }}&min_price={{ request.GET.min_price }}&max_price={{ request.GET.max_price }}&rooms={{ request.GET.rooms }}&type={{ request.GET.type }}">
-               Anterior
-            </a>
-          </li>
-        {% endif %}
+        <div class="col-md-2">
+            <input type="number" name="min_price" class="form-control"
+                   placeholder="Precio mínimo" value="{{ request.GET.min_price }}" min="0">
+        </div>
 
-        <li class="page-item active"><span class="page-link">{{ properties.number }}</span></li>
+        <div class="col-md-2">
+            <input type="number" name="max_price" class="form-control"
+                   placeholder="Precio máximo" value="{{ request.GET.max_price }}" min="0">
+        </div>
 
-        {% if properties.has_next %}
-          <li class="page-item">
-            <a class="page-link"
-               href="?page={{ properties.next_page_number }}&city={{ request.GET.city }}&min_price={{ request.GET.min_price }}&max_price={{ request.GET.max_price }}&rooms={{ request.GET.rooms }}&type={{ request.GET.type }}">
-               Siguiente
-            </a>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
-  {% else %}
-    <div class="alert alert-info">
-      No hay propiedades disponibles con esos filtros.
-    </div>
-  {% endif %}
+        <div class="col-md-2">
+            <select name="rooms" class="form-select">
+                <option value="">Habitaciones (mín.)</option>
+                {% for n in "12345" %}
+                    <option value="{{ n }}" {% if request.GET.rooms == n %}selected{% endif %}>{{ n }}{% if n == "5" %}+{% endif %}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <div class="d-flex gap-2">
+                <select name="type" class="form-select">
+                    <option value="">Todos los tipos</option>
+                    <option value="Arriendo" {% if request.GET.type == "Arriendo" %}selected{% endif %}>Arriendo</option>
+                    <option value="Venta" {% if request.GET.type == "Venta" %}selected{% endif %}>Venta</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    {% if properties %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for prop in properties %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    {% if prop.image %}
+                        <img src="{{ prop.image.url }}" class="card-img-top" alt="{{ prop.title }}">
+                    {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">{{ prop.title }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        
+                        <div class="d-flex justify-content-between align-items-start">
+                            <span class="badge {% if prop.type == 'Venta' %}bg-success{% else %}bg-primary{% endif %}">
+                                {{ prop.type }}
+                            </span>
+                            
+                            {% if user.is_authenticated and not user.is_staff %}
+                                {% if prop in user.profile.favorites.all %}
+                                    <a href="{% url 'remove_favorite' prop.id %}" class="text-danger" title="Quitar de favoritos">
+                                        <i class="bi bi-heart-fill fs-5"></i>
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'add_favorite' prop.id %}" class="text-secondary" title="Añadir a favoritos">
+                                        <i class="bi bi-heart fs-5"></i>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title mt-2">{{ prop.title }}</h5>
+                        <p class="card-text">
+                            {{ prop.city }}, {{ prop.department }} <br>
+                            {{ prop.area }} m² – {{ prop.rooms }} hab. – {{ prop.bathrooms }} baños
+                        </p>
+                        <p class="fw-bold text-primary fs-5 mt-auto">
+                            ${{ prop.price|floatformat:0|intcomma }}
+                        </p>
+                        <a href="{% url 'property_detail' prop.pk %}" class="btn btn-primary w-100">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <nav aria-label="Paginación" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if properties.has_previous %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?page={{ properties.previous_page_number }}&city={{ request.GET.city }}&min_price={{ request.GET.min_price }}&max_price={{ request.GET.max_price }}&rooms={{ request.GET.rooms }}&type={{ request.GET.type }}">
+                        Anterior
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item active"><span class="page-link">{{ properties.number }}</span></li>
+
+                {% if properties.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="?page={{ properties.next_page_number }}&city={{ request.GET.city }}&min_price={{ request.GET.min_price }}&max_price={{ request.GET.max_price }}&rooms={{ request.GET.rooms }}&type={{ request.GET.type }}">
+                        Siguiente
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <div class="alert alert-info">
+            No hay propiedades disponibles con esos filtros.
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
-

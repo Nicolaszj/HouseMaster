@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .forms import PropertyForm
+from django.contrib.auth.decorators import login_required
 
 
 def property_list(request):
@@ -56,17 +57,17 @@ class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_staff
 
-# Vista del panel que lista todas las propiedades
+
 class PropertyListView(StaffRequiredMixin, ListView):
     model = Property
     template_name = 'property/property_panel.html'
     context_object_name = 'properties'
 
     def get_queryset(self):
-        # Muestra solo las propiedades creadas por el agente logueado
+        
         return Property.objects.filter(agent=self.request.user).order_by('-created_at')
 
-# HU06: Vista para crear una nueva propiedad
+
 class PropertyCreateView(StaffRequiredMixin, CreateView):
     model = Property
     form_class = PropertyForm
@@ -74,19 +75,39 @@ class PropertyCreateView(StaffRequiredMixin, CreateView):
     success_url = reverse_lazy('property_panel')
 
     def form_valid(self, form):
-        # Asigna el agente actual (el usuario logueado) a la propiedad
+        
         form.instance.agent = self.request.user
         return super().form_valid(form)
 
-# HU07: Vista para editar una propiedad existente
+
 class PropertyUpdateView(StaffRequiredMixin, UpdateView):
     model = Property
     form_class = PropertyForm
     template_name = 'property/property_form.html'
     success_url = reverse_lazy('property_panel')
 
-# HU08: Vista para eliminar una propiedad
+
 class PropertyDeleteView(StaffRequiredMixin, DeleteView):
     model = Property
     template_name = 'property/property_confirm_delete.html'
     success_url = reverse_lazy('property_panel')
+
+@login_required
+def add_favorite(request, property_id):
+    """Añade una propiedad a los favoritos del usuario."""
+    property = get_object_or_404(Property, id=property_id)
+    request.user.profile.favorites.add(property)
+    return redirect(request.META.get('HTTP_REFERER', 'property_list'))
+
+@login_required
+def remove_favorite(request, property_id):
+    """Quita una propiedad de los favoritos del usuario."""
+    property = get_object_or_404(Property, id=property_id)
+    request.user.profile.favorites.remove(property)
+    return redirect(request.META.get('HTTP_REFERER', 'property_list'))
+
+@login_required
+def favorite_list(request):
+    """Muestra la lista de propiedades favoritas del usuario."""
+    favorites = request.user.profile.favorites.all()
+    return render(request, 'property/favorites_list.html', {'favorites': favorites})
