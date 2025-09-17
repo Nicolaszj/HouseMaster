@@ -35,9 +35,15 @@
         {% endfor %}
       </select>
     </div>
-
     <div class="col-md-3">
-      <button type="submit" class="btn btn-primary w-100">Buscar</button>
+      <div class="d-flex gap-2">
+        <select name="type" class="form-select">
+          <option value="">Todos los tipos</option>
+          <option value="Arriendo" {% if request.GET.type == "Arriendo" %}selected{% endif %}>Arriendo</option>
+          <option value="Venta" {% if request.GET.type == "Venta" %}selected{% endif %}>Venta</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </div>
     </div>
   </form>
 
@@ -54,6 +60,12 @@
             </div>
           {% endif %}
           <div class="card-body">
+            <p class="mb-2">
+              <span class="badge {% if prop.type == 'Venta' %}bg-success{% else %}bg-primary{% endif %}">
+                {{ prop.type }}
+              </span>
+            </p>
+
             <h5 class="card-title">{{ prop.title }}</h5>
             <p class="card-text">
               {{ prop.city }}, {{ prop.department }} <br>
@@ -74,7 +86,10 @@
       <ul class="pagination justify-content-center">
         {% if properties.has_previous %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ properties.previous_page_number }}&city={{ request.GET.city }}&min_price={{ request.GET.min_price }}&max_price={{ request.GET.max_price }}&rooms={{ request.GET.rooms }}">Anterior</a>
+            <a class="page-link"
+               href="?page={{ properties.previous_page_number }}&city={{ request.GET.city }}&min_price={{ request.GET.min_price }}&max_price={{ request.GET.max_price }}&rooms={{ request.GET.rooms }}&type={{ request.GET.type }}">
+               Anterior
+            </a>
           </li>
         {% endif %}
 
@@ -82,7 +97,10 @@
 
         {% if properties.has_next %}
           <li class="page-item">
-            <a class="page-link" href="?page={{ properties.next_page_number }}&city={{ request.GET.city }}&min_price={{ request.GET.min_price }}&max_price={{ request.GET.max_price }}&rooms={{ request.GET.rooms }}">Siguiente</a>
+            <a class="page-link"
+               href="?page={{ properties.next_page_number }}&city={{ request.GET.city }}&min_price={{ request.GET.min_price }}&max_price={{ request.GET.max_price }}&rooms={{ request.GET.rooms }}&type={{ request.GET.type }}">
+               Siguiente
+            </a>
           </li>
         {% endif %}
       </ul>
@@ -94,3 +112,4 @@
   {% endif %}
 </div>
 {% endblock %}
+

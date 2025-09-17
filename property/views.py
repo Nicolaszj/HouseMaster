@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from .models import Property
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -13,6 +15,7 @@ def property_list(request):
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     rooms = request.GET.get('rooms')
+    ptype = request.GET.get('type')  
 
     if city:
         qs = qs.filter(city=city)
@@ -28,6 +31,9 @@ def property_list(request):
     if rooms and rooms.isdigit():
         if int(rooms) >= 1:
             qs = qs.filter(rooms__gte=int(rooms))
+
+    if ptype in ("Arriendo", "Venta"):
+        qs = qs.filter(type=ptype)
 
     # ciudades únicas para el filtro select
     cities = Property.objects.values_list("city", flat=True).distinct()
