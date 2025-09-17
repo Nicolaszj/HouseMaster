@@ -82,23 +82,3 @@ def visit_confirm(request, visit_id):
     visit.save(update_fields=["status"])
     messages.success(request, "Tu visita fue confirmada.")
     return redirect("my_visits")
-
-@login_required
-def add_favorite(request, property_id):
-    """Añade una propiedad a los favoritos del usuario."""
-    property = get_object_or_404(Property, id=property_id)
-    request.user.profile.favorites.add(property)
-    return redirect(request.META.get('HTTP_REFERER', 'property_list'))
-
-@login_required
-def remove_favorite(request, property_id):
-    """Quita una propiedad de los favoritos del usuario."""
-    property = get_object_or_404(Property, id=property_id)
-    request.user.profile.favorites.remove(property)
-    return redirect(request.META.get('HTTP_REFERER', 'property_list'))
-
-@login_required
-def favorite_list(request):
-    """Muestra la lista de propiedades favoritas del usuario."""
-    favorites = request.user.profile.favorites.all()
-    return render(request, 'property/favorites_list.html', {'favorites': favorites})
