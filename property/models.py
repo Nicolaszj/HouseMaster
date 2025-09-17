@@ -32,22 +32,3 @@ class PropertyImage(models.Model):
 
     def __str__(self):
         return f"Foto de {self.property.title}"
-
-
-
-class Visit(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Pendiente'),
-        ('confirmed', 'Confirmada'),
-        ('cancelled', 'Cancelada'),
-    ]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    fecha_hora = models.DateTimeField()
-    estado = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.user.username} → {self.property.title} ({self.fecha_hora})"
-# Create your models here.

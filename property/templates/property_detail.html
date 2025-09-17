@@ -1,22 +1,26 @@
 {% extends "base.html" %}
 {% load humanize %}
-
-{% block title %}{{ prop.title }} - HouseMaster{% endblock %}
+{% block title %}{{ property.title }} - HouseMaster{% endblock %}
 
 {% block content %}
 <div class="row">
   <div class="col-lg-7 mb-4">
-    {% if gallery %}
+    {% if property.images.all %}
       <div id="propCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-          {% for img in gallery %}
-            <button type="button" data-bs-target="#propCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+          {% for img in property.images.all %}
+            <button type="button"
+                    data-bs-target="#propCarousel"
+                    data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.first %}active{% endif %}"
+                    aria-current="{% if forloop.first %}true{% endif %}"
+                    aria-label="Slide {{ forloop.counter }}"></button>
           {% endfor %}
         </div>
         <div class="carousel-inner rounded shadow-sm">
-          {% for img in gallery %}
+          {% for img in property.images.all %}
             <div class="carousel-item {% if forloop.first %}active{% endif %}">
-              <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.caption|default:prop.title }}">
+              <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.caption|default:property.title }}">
               {% if img.caption %}
                 <div class="carousel-caption d-none d-md-block">
                   <p class="bg-dark bg-opacity-50 rounded px-2">{{ img.caption }}</p>
@@ -35,26 +39,31 @@
         </button>
       </div>
     {% else %}
-      <img src="https://placehold.co/1000x600/E9ECEF/ADB5BD?text={{ prop.title }}" class="img-fluid rounded shadow-sm" alt="{{ prop.title }}">
+      <img src="https://placehold.co/1000x600/E9ECEF/ADB5BD?text={{ property.title }}"
+           class="img-fluid rounded shadow-sm" alt="{{ property.title }}">
     {% endif %}
   </div>
 
   <div class="col-lg-5">
-    <h1 class="h3">{{ prop.title }}</h1>
-    <p class="text-muted mb-1">{{ prop.city }}, {{ prop.department }}</p>
-    <p class="h3 text-primary mb-3">${{ prop.price|floatformat:0|intcomma }}</p>
+    <h1 class="h3">{{ property.title }}</h1>
+    <p class="text-muted mb-1">{{ property.city }}, {{ property.department }}</p>
+    <p class="h3 text-primary mb-3">${{ property.price|floatformat:0|intcomma }}</p>
 
     <ul class="list-group mb-3">
-      <li class="list-group-item"><strong>Tipo:</strong> {{ prop.type }}</li>
-      <li class="list-group-item"><strong>Estado:</strong> {{ prop.status }}</li>
-      <li class="list-group-item"><strong>Área:</strong> {{ prop.area }} m²</li>
-      <li class="list-group-item"><strong>Habitaciones:</strong> {{ prop.rooms }}</li>
-      <li class="list-group-item"><strong>Baños:</strong> {{ prop.bathrooms }}</li>
-      <li class="list-group-item"><strong>Dirección:</strong> {{ prop.address }}</li>
+      <li class="list-group-item"><strong>Tipo:</strong> {{ property.type }}</li>
+      <li class="list-group-item"><strong>Estado:</strong> {{ property.status }}</li>
+      <li class="list-group-item"><strong>Área:</strong> {{ property.area }} m²</li>
+      <li class="list-group-item"><strong>Habitaciones:</strong> {{ property.rooms }}</li>
+      <li class="list-group-item"><strong>Baños:</strong> {{ property.bathrooms }}</li>
+      <li class="list-group-item"><strong>Dirección:</strong> {{ property.address }}</li>
     </ul>
 
     <h2 class="h5">Descripción</h2>
-    <p>{{ prop.description }}</p>
+    <p>{{ property.description }}</p>
+
+    <a href="{% url 'visit_schedule' property.id %}" class="btn btn-success w-100">
+        Agendar visita
+    </a>
   </div>
 </div>
 {% endblock %}

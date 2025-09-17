@@ -17,6 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+TIME_ZONE = "America/Bogota"  # o la que uses
+USE_TZ = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'core',
     'account',
     'property',
+    'visits', 
 
 ]
 

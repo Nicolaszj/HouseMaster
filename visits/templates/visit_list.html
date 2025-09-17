@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Mis visitas{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="h4 mb-3">Mis visitas</h1>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  {% if visits %}
+    <div class="list-group">
+      {% for v in visits %}
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong>{{ v.property.title }}</strong><br>
+          <small>
+            {{ v.date_time|date:"d/m/Y H:i" }}
+            —
+            Estado:
+            {% if v.status == "pending" %}
+              <span class="badge bg-warning text-dark">Pendiente</span>
+            {% elif v.status == "confirmed" %}
+              <span class="badge bg-success">Confirmada</span>
+            {% else %}
+              <span class="badge bg-secondary">Cancelada</span>
+            {% endif %}
+          </small>
+        </div>
+        <div class="d-flex gap-2">
+          {% if v.status == "pending" %}
+            <a href="{% url 'visit_confirm' v.id %}" class="btn btn-sm btn-outline-success">Confirmar</a>
+          {% endif %}
+          {% if v.status != "cancelled" %}
+            <a href="{% url 'visit_cancel' v.id %}" class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('¿Cancelar esta visita?');">Cancelar</a>
+          {% endif %}
+          <a class="btn btn-sm btn-outline-primary" href="{% url 'property_detail' v.property_id %}">Ver propiedad</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">
+      No tienes visitas agendadas todavía.
+      <a href="{% url 'property_list' %}" class="alert-link">Ver propiedades</a> para agendar una.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
