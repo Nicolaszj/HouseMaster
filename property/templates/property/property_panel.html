@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Panel de Propiedades{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Mis Propiedades</h2>
+        <a href="{% url 'property_create' %}" class="btn btn-primary">Crear Nueva Propiedad</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Ciudad</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for property in properties %}
+                <tr>
+                    <td>{{ property.title }}</td>
+                    <td>{{ property.city }}</td>
+                    <td>${{ property.price|floatformat:0 }}</td>
+                    <td>
+                        <a href="{% url 'property_update' property.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'property_delete' property.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">Aún no has publicado ninguna propiedad.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

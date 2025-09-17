@@ -25,6 +25,9 @@
                         {% if user.last_name %}
                             <p class="mb-1"><strong>Apellido:</strong> {{ user.last_name }}</p>
                         {% endif %}
+                        {% if user.profile.phone_number %}
+                            <p class="mb-1"><strong>Teléfono:</strong> {{ user.profile.phone_number }}</p>
+                        {% endif %}
                     </div>
                     <div class="d-grid gap-2">
                         <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-lg">

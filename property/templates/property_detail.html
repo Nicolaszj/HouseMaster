@@ -60,7 +60,20 @@
 
     <h2 class="h5">Descripción</h2>
     <p>{{ property.description }}</p>
-
+    {% if property.agent and property.agent.profile.phone_number %}
+        <hr>
+        <h2 class="h5">Información del Agente</h2>
+        <div class="card bg-light border-0 mb-3">
+            <div class="card-body">
+                <p class="mb-1">
+                    <strong>Contacto:</strong> {{ property.agent.first_name }} {{ property.agent.last_name }}
+                </p>
+                <p class="mb-0">
+                    <strong>Teléfono:</strong> {{ property.agent.profile.phone_number }}
+                </p>
+            </div>
+        </div>
+    {% endif %}
     <a href="{% url 'visit_schedule' property.id %}" class="btn btn-success w-100">
         Agendar visita
     </a>
