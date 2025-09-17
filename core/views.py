@@ -12,7 +12,7 @@ def contacto(request): return render(request, "core/contacto.html")
 def perfil(request): return render(request, 'perfil.html')
 
 
-# Chatbot
+# Chatbot-Santiago
 def chatbot_api(request):
     if request.method == 'POST':
         data = json.loads(request.body)

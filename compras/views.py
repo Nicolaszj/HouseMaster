@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from propiedades.models import Propiedad
 from .forms import CompraForm  # si tienes un formulario de compra
 
+#santiago
 def comprar_propiedad(request, propiedad_id):
     propiedad = get_object_or_404(Propiedad, id=propiedad_id)
     if request.method == 'POST':
