@@ -15,7 +15,6 @@
         {% for prop in properties %}
         <div class="col">
             <div class="card h-100 shadow-sm">
-                <!-- Imagen (de momento usamos placeholder si no hay campo image en Property) -->
                 {% if prop.image %}
                     <img src="{{ prop.image.url }}" class="card-img-top" alt="Imagen de {{ prop.title }}">
                 {% else %}

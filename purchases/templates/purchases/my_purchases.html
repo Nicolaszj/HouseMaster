@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Compras - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Mis Compras</h2>
+    
+    <!-- Estadísticas -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Total</h5>
+                    <p class="h3">{{ stats.total_purchases }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Pendientes</h5>
+                    <p class="h3 text-warning">{{ stats.pending }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Completadas</h5>
+                    <p class="h3 text-success">{{ stats.completed }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Total Invertido</h5>
+                    <p class="h3 text-primary">${{ stats.total_amount|floatformat:0 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lista de Compras -->
+    {% if purchases %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Historial de Compras</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID Transacción</th>
+                            <th>Propiedad</th>
+                            <th>Precio</th>
+                            <th>Cuota Inicial</th>
+                            <th>Método</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for purchase in purchases %}
+                        <tr>
+                            <td class="text-monospace">{{ purchase.transaction_id }}</td>
+                            <td>
+                                <a href="{% url 'property_detail' purchase.property.id %}">
+                                    {{ purchase.property.title|truncatewords:5 }}
+                                </a>
+                            </td>
+                            <td>${{ purchase.purchase_price|floatformat:2 }}</td>
+                            <td>${{ purchase.down_payment|floatformat:2 }}</td>
+                            <td>{{ purchase.get_payment_method_display }}</td>
+                            <td>
+                                {% if purchase.status == 'pending' %}
+                                    <span class="badge badge-warning">{{ purchase.get_status_display }}</span>
+                                {% elif purchase.status == 'approved' %}
+                                    <span class="badge badge-info">{{ purchase.get_status_display }}</span>
+                                {% elif purchase.status == 'completed' %}
+                                    <span class="badge badge-success">{{ purchase.get_status_display }}</span>
+                                {% elif purchase.status == 'cancelled' %}
+                                    <span class="badge badge-secondary">{{ purchase.get_status_display }}</span>
+                                {% else %}
+                                    <span class="badge badge-danger">{{ purchase.get_status_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ purchase.created_at|date:"d/m/Y" }}</td>
+                            <td>
+                                {% if purchase.can_be_cancelled %}
+                                <a href="{% url 'cancel_purchase' purchase.id %}" class="btn btn-sm btn-danger">
+                                    Cancelar
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        <h5>No tienes compras registradas</h5>
+        <p>Explora nuestras propiedades y encuentra tu hogar ideal.</p>
+        <a href="{% url 'property_list' %}" class="btn btn-primary">Ver Propiedades</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

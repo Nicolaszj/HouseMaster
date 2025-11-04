@@ -1,10 +1,16 @@
-from django.shortcuts import render, get_object_or_404
-from property.models import Property
+from django.shortcuts import render
+from property.services.property_service import PropertyService
+
+
 def home(request):
     """
     Vista para la página de inicio.
     
-    Renderiza la plantilla home.html.
+    Utiliza el Service Layer para acceder a las propiedades.
+    DIP: Depende del servicio, no directamente del modelo.
     """
-    properties = Property.objects.all()
+    # Usar el servicio en lugar de acceder directamente al modelo
+    service = PropertyService()
+    properties = service.get_available_properties()[:6]  # Mostrar solo 6 en home
+    
     return render(request, 'core/home.html', {'properties': properties})

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action|title }} Compra - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header {% if action == 'aprobar' %}bg-success{% else %}bg-danger{% endif %} text-white">
+                    <h5 class="mb-0">Confirmar {{ action|title }}</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="mb-3">Detalles de la Compra</h6>
+                    
+                    <div class="mb-3">
+                        <p><strong>ID de Transacción:</strong> {{ purchase.transaction_id|default:"---" }}</p>
+                        <p><strong>Propiedad:</strong> {{ purchase.property.title }}</p>
+                        <p><strong>Comprador:</strong> {{ purchase.buyer.get_full_name|default:purchase.buyer.username }}</p>
+                        <p><strong>Email:</strong> {{ purchase.buyer.email }}</p>
+                        <p><strong>Precio:</strong> ${{ purchase.purchase_price|floatformat:2 }}</p>
+                        <p><strong>Cuota Inicial:</strong> ${{ purchase.down_payment|floatformat:2 }}</p>
+                        <p><strong>Método de Pago:</strong> {{ purchase.get_payment_method_display }}</p>
+                    </div>
+                    
+                    {% if purchase.notes %}
+                    <div class="alert alert-info">
+                        <strong>Notas del Comprador:</strong><br>
+                        {{ purchase.notes }}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if action == 'rechazar' %}
+                        <div class="form-group mb-3">
+                            <label for="reason">Razón del Rechazo (opcional):</label>
+                            <textarea name="reason" id="reason" class="form-control" rows="3" 
+                                      placeholder="Explica por qué rechazas esta compra..."></textarea>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="alert {% if action == 'aprobar' %}alert-success{% else %}alert-warning{% endif %}">
+                            {% if action == 'aprobar' %}
+                                <i class="bi bi-info-circle"></i> 
+                                Al aprobar, la compra pasará a estado "Aprobada" y la propiedad quedará reservada.
+                            {% else %}
+                                <i class="bi bi-exclamation-triangle"></i> 
+                                Al rechazar, la compra será cancelada y la propiedad volverá a estar disponible.
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'agent_purchases' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Volver
+                            </a>
+                            <button type="submit" class="btn {% if action == 'aprobar' %}btn-success{% else %}btn-danger{% endif %}">
+                                {% if action == 'aprobar' %}
+                                    <i class="bi bi-check-circle"></i> Confirmar Aprobación
+                                {% else %}
+                                    <i class="bi bi-x-circle"></i> Confirmar Rechazo
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Compras de Mis Propiedades - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Gestión de Compras - Mis Propiedades</h2>
+    
+    <!-- Estadísticas -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-warning">
+                <div class="card-body text-center">
+                    <h3 class="text-warning">{{ pending_count }}</h3>
+                    <p class="mb-0">Pendientes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-success">
+                <div class="card-body text-center">
+                    <h3 class="text-success">{{ approved_count }}</h3>
+                    <p class="mb-0">Aprobadas</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary">
+                <div class="card-body text-center">
+                    <h3 class="text-primary">{{ completed_count }}</h3>
+                    <p class="mb-0">Completadas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if purchases %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Propiedad</th>
+                        <th>Comprador</th>
+                        <th>Precio</th>
+                        <th>Cuota Inicial</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchase in purchases %}
+                    <tr>
+                        <td>
+                            <small class="text-muted">#{{ purchase.transaction_id|default:"---" }}</small>
+                        </td>
+                        <td>
+                            <strong>{{ purchase.property.title }}</strong><br>
+                            <small class="text-muted">{{ purchase.property.location }}</small>
+                        </td>
+                        <td>
+                            {{ purchase.buyer.get_full_name|default:purchase.buyer.username }}<br>
+                            <small class="text-muted">{{ purchase.buyer.email }}</small>
+                        </td>
+                        <td>${{ purchase.purchase_price|floatformat:2 }}</td>
+                        <td>${{ purchase.down_payment|floatformat:2 }}</td>
+                        <td>
+                            {% if purchase.status == 'pending' %}
+                                <span class="badge bg-warning">Pendiente</span>
+                            {% elif purchase.status == 'approved' %}
+                                <span class="badge bg-success">Aprobada</span>
+                            {% elif purchase.status == 'completed' %}
+                                <span class="badge bg-primary">Completada</span>
+                            {% elif purchase.status == 'cancelled' %}
+                                <span class="badge bg-danger">Cancelada</span>
+                            {% elif purchase.status == 'rejected' %}
+                                <span class="badge bg-dark">Rechazada</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <small>{{ purchase.created_at|date:"d/m/Y H:i" }}</small>
+                        </td>
+                        <td>
+                            {% if purchase.status == 'pending' %}
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'approve_purchase' purchase.id %}" 
+                                       class="btn btn-success" 
+                                       title="Aprobar">
+                                        <i class="bi bi-check-circle"></i> Aprobar
+                                    </a>
+                                    <a href="{% url 'reject_purchase' purchase.id %}" 
+                                       class="btn btn-danger" 
+                                       title="Rechazar">
+                                        <i class="bi bi-x-circle"></i> Rechazar
+                                    </a>
+                                </div>
+                            {% else %}
+                                <span class="text-muted">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if purchase.notes %}
+                    <tr class="table-secondary">
+                        <td colspan="8">
+                            <small><strong>Notas:</strong> {{ purchase.notes }}</small>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No tienes compras registradas en tus propiedades.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

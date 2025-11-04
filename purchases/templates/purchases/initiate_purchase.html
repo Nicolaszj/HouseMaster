@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Comprar Propiedad - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2 class="mb-4">Comprar Propiedad</h2>
+            
+            <!-- Información de la Propiedad -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Detalles de la Propiedad</h5>
+                </div>
+                <div class="card-body">
+                    <h4>{{ property.title }}</h4>
+                    <p class="text-muted">{{ property.get_property_type_display }} - {{ property.location }}</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Precio:</strong> ${{ property.price|floatformat:2 }}</p>
+                            <p><strong>Área:</strong> {{ property.square_meters }} m²</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Habitaciones:</strong> {{ property.bedrooms }}</p>
+                            <p><strong>Baños:</strong> {{ property.bathrooms }}</p>
+                        </div>
+                    </div>
+                    <p><strong>Agente:</strong> {{ property.agent.get_full_name|default:property.agent.username }}</p>
+                </div>
+            </div>
+            
+            <!-- Formulario de Compra -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Información de Pago</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-3">
+                            <label for="{{ form.payment_method.id_for_label }}">{{ form.payment_method.label }}</label>
+                            {{ form.payment_method }}
+                            {% if form.payment_method.errors %}
+                                <div class="text-danger">{{ form.payment_method.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="{{ form.down_payment.id_for_label }}">{{ form.down_payment.label }}</label>
+                            {{ form.down_payment }}
+                            <small class="form-text text-muted">
+                                Precio total: ${{ property.price|floatformat:2 }}
+                            </small>
+                            {% if form.down_payment.errors %}
+                                <div class="text-danger">{{ form.down_payment.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
+                            {{ form.notes }}
+                            {% if form.notes.errors %}
+                                <div class="text-danger">{{ form.notes.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <strong>Nota:</strong> Este es un sistema de pago educativo. No se realizarán cargos reales.
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'property_detail' property.id %}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-success">Confirmar Compra</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

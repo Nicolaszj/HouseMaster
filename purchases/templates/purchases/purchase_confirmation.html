@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmación de Compra - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="alert alert-success text-center" role="alert">
+                <h4 class="alert-heading">¡Compra Iniciada Exitosamente!</h4>
+                <hr>
+                <p class="mb-0">Tu solicitud de compra ha sido registrada.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Detalles de la Compra</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>ID de Transacción:</strong></p>
+                            <p class="text-monospace">{{ purchase.transaction_id }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Estado:</strong></p>
+                            <span class="badge badge-warning">{{ purchase.get_status_display }}</span>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h6>Propiedad</h6>
+                    <p><strong>{{ purchase.property.title }}</strong></p>
+                    <p class="text-muted">{{ purchase.property.location }}</p>
+                    
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Precio de Compra:</strong></p>
+                            <p class="h5 text-success">${{ purchase.purchase_price|floatformat:2 }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Cuota Inicial:</strong></p>
+                            <p class="h5 text-info">${{ purchase.down_payment|floatformat:2 }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <p><strong>Monto Restante:</strong></p>
+                            <p class="h5">${{ purchase.get_remaining_amount|floatformat:2 }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Método de Pago:</strong></p>
+                            <p>{{ purchase.get_payment_method_display }}</p>
+                        </div>
+                    </div>
+                    
+                    {% if purchase.notes %}
+                    <hr>
+                    <p><strong>Notas:</strong></p>
+                    <p>{{ purchase.notes }}</p>
+                    {% endif %}
+                    
+                    <hr>
+                    
+                    <div class="alert alert-info">
+                        <strong>Próximos pasos:</strong>
+                        <ul class="mb-0">
+                            <li>Tu solicitud será revisada por el agente de la propiedad</li>
+                            <li>Recibirás una notificación cuando cambie el estado</li>
+                            <li>Puedes ver el estado en "Mis Compras"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'my_purchases' %}" class="btn btn-primary">Ver Mis Compras</a>
+                        <a href="{% url 'property_list' %}" class="btn btn-secondary">Volver a Propiedades</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

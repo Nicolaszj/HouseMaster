@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+{% block title %}Chat - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sidebar con conversaciones -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Conversaciones</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div id="conversations-list" class="list-group list-group-flush" style="max-height: 500px; overflow-y: auto;">
+                        {% if conversations %}
+                            {% for conv in conversations %}
+                            <a href="#" class="list-group-item list-group-item-action conversation-item" data-conversation-id="{{ conv.id }}">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ conv.title|truncatewords:4 }}</h6>
+                                    <small>{{ conv.updated_at|date:"d/m" }}</small>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        {% else %}
+                            <div class="p-3 text-center text-muted">
+                                <p>No hay conversaciones</p>
+                                <small>Inicia una nueva conversación</small>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Área de chat -->
+        <div class="col-md-9">
+            <div class="card" style="height: 600px;">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">🤖 Asistente Virtual HouseMaster</h5>
+                </div>
+                
+                <div class="card-body" id="chat-messages" style="overflow-y: auto; height: calc(100% - 120px);">
+                    {% if not gemini_configured %}
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Chatbot no configurado</strong><br>
+                        Para usar el chatbot, necesitas configurar la API key de Gemini en settings.py:
+                        <code>GEMINI_API_KEY = 'tu-api-key'</code>
+                    </div>
+                    {% else %}
+                    <div class="text-center text-muted py-5">
+                        <h4>¡Hola! 👋</h4>
+                        <p>Soy tu asistente virtual de HouseMaster.</p>
+                        <p>¿En qué puedo ayudarte hoy?</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="card-footer">
+                    <form id="chat-form" {% if not gemini_configured %}style="opacity: 0.5; pointer-events: none;"{% endif %}>
+                        <div class="input-group">
+                            <input type="text" 
+                                   id="message-input" 
+                                   class="form-control" 
+                                   placeholder="Escribe tu mensaje..."
+                                   {% if not gemini_configured %}disabled{% endif %}>
+                            <button type="submit" 
+                                    class="btn btn-primary" 
+                                    id="send-button"
+                                    {% if not gemini_configured %}disabled{% endif %}>
+                                Enviar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 80%;
+}
+
+.message.user {
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.message.assistant {
+    background-color: #f1f3f5;
+    color: #212529;
+    margin-right: auto;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 5px;
+}
+
+.conversation-item.active {
+    background-color: #007bff;
+    color: white;
+}
+</style>
+
+<script>
+let currentConversationId = null;
+
+// Función para agregar mensaje a la UI
+function addMessage(content, role, timestamp) {
+    const messagesContainer = document.getElementById('chat-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${role}`;
+    
+    const time = new Date(timestamp).toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    messageDiv.innerHTML = `
+        <div>${content}</div>
+        <div class="message-time">${time}</div>
+    `;
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Función para limpiar el chat
+function clearChat() {
+    const messagesContainer = document.getElementById('chat-messages');
+    messagesContainer.innerHTML = `
+        <div class="text-center text-muted py-5">
+            <h4>¡Hola! 👋</h4>
+            <p>Soy tu asistente virtual de HouseMaster.</p>
+            <p>¿En qué puedo ayudarte hoy?</p>
+        </div>
+    `;
+}
+
+// Enviar mensaje
+document.getElementById('chat-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const input = document.getElementById('message-input');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Limpiar entrada
+    input.value = '';
+    
+    // Agregar mensaje del usuario
+    if (!currentConversationId) {
+        clearChat();
+    }
+    addMessage(message, 'user', new Date().toISOString());
+    
+    // Deshabilitar botón mientras se procesa
+    const sendButton = document.getElementById('send-button');
+    sendButton.disabled = true;
+    sendButton.textContent = 'Enviando...';
+    
+    try {
+        const response = await fetch('{% url "chat_send_message" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                message: message,
+                conversation_id: currentConversationId
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Actualizar ID de conversación
+            if (!currentConversationId) {
+                currentConversationId = data.conversation_id;
+                // Recargar lista de conversaciones
+                location.reload();
+            }
+            
+            // Agregar respuesta del asistente
+            addMessage(data.assistant_message.content, 'assistant', data.assistant_message.created_at);
+        } else {
+            alert('Error: ' + (data.error || 'Error desconocido'));
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al enviar el mensaje');
+    } finally {
+        sendButton.disabled = false;
+        sendButton.textContent = 'Enviar';
+    }
+});
+
+// Cargar conversación
+document.querySelectorAll('.conversation-item').forEach(item => {
+    item.addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        const conversationId = item.dataset.conversationId;
+        
+        try {
+            const response = await fetch(`/chat/conversation/${conversationId}/`);
+            const data = await response.json();
+            
+            // Limpiar chat
+            document.getElementById('chat-messages').innerHTML = '';
+            
+            // Cargar mensajes
+            data.messages.forEach(msg => {
+                addMessage(msg.content, msg.role, msg.created_at);
+            });
+            
+            // Actualizar conversación actual
+            currentConversationId = conversationId;
+            
+            // Actualizar UI
+            document.querySelectorAll('.conversation-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al cargar la conversación');
+        }
+    });
+});
+</script>
+{% endblock %}

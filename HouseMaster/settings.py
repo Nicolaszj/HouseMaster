@@ -45,8 +45,9 @@ INSTALLED_APPS = [
     'core',
     'account',
     'property',
-    'visits', 
-
+    'visits',
+    'purchases',
+    'chatbot',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Gemini API Configuration
+# Obtén tu API key gratuita en: https://makersuite.google.com/app/apikey
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', 'AIzaSyDXpk06dQWWwXgcFk9uS7hLiPNUlCcG6jg')
