@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<!-- Widget del Clima -->
+<div class="card border-info">
+    <div class="card-header bg-info text-white">
+        <i class="bi bi-cloud-sun"></i> Clima en {{ weather.city }}
+    </div>
+    <div class="card-body">
+        {% if weather.success %}
+            <div class="d-flex align-items-center">
+                {% if weather.icon %}
+                <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" 
+                     alt="Weather Icon" 
+                     style="width: 50px; height: 50px;">
+                {% endif %}
+                <div class="ms-3">
+                    <h4 class="mb-0">{{ weather.temperature }}°C</h4>
+                    <p class="mb-0 text-muted">{{ weather.description|title }}</p>
+                    <small class="text-muted">Humedad: {{ weather.humidity }}%</small>
+                </div>
+            </div>
+            
+            {% if weather.note %}
+            <div class="alert alert-warning mt-2 mb-0 py-1 px-2">
+                <small>{{ weather.note }}</small>
+            </div>
+            {% endif %}
+        {% else %}
+            <p class="mb-0 text-danger">
+                <i class="bi bi-exclamation-circle"></i> No se pudo obtener el clima
+            </p>
+        {% endif %}
+    </div>
+    <div class="card-footer text-muted small">
+        <i class="bi bi-info-circle"></i> Fuente: {{ weather.source }}
+    </div>
+</div>

@@ -1,0 +1,245 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: HouseMaster\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-05 01:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Real Estate"
+msgstr "Real Estate"
+
+msgid "Inicio"
+msgstr "Home"
+
+msgid "Propiedades"
+msgstr "Properties"
+
+msgid "Contacto"
+msgstr "Contact"
+
+msgid "Chat"
+msgstr "Chat"
+
+msgid "Mis Propiedades"
+msgstr "My Properties"
+
+msgid "Gestionar Compras"
+msgstr "Manage Purchases"
+
+msgid "Favoritos"
+msgstr "Favorites"
+
+msgid "Visitas"
+msgstr "Visits"
+
+msgid "Compras"
+msgstr "Purchases"
+
+msgid "Mi Perfil"
+msgstr "My Profile"
+
+msgid "Cerrar Sesión"
+msgstr "Logout"
+
+msgid "Iniciar Sesión"
+msgstr "Login"
+
+msgid "Registrarse"
+msgstr "Sign Up"
+
+msgid "Bienvenido a HouseMaster"
+msgstr "Welcome to HouseMaster"
+
+msgid "Tu plataforma inmobiliaria de confianza"
+msgstr "Your trusted real estate platform"
+
+msgid "Buscar Propiedades"
+msgstr "Search Properties"
+
+msgid "Venta"
+msgstr "Sale"
+
+msgid "Arriendo"
+msgstr "Rent"
+
+msgid "Disponible"
+msgstr "Available"
+
+msgid "Vendida"
+msgstr "Sold"
+
+msgid "Arrendada"
+msgstr "Rented"
+
+msgid "Precio"
+msgstr "Price"
+
+msgid "Ubicación"
+msgstr "Location"
+
+msgid "Habitaciones"
+msgstr "Bedrooms"
+
+msgid "Baños"
+msgstr "Bathrooms"
+
+msgid "Área"
+msgstr "Area"
+
+msgid "Descripción"
+msgstr "Description"
+
+msgid "Comprar Propiedad"
+msgstr "Buy Property"
+
+msgid "Agendar Visita"
+msgstr "Schedule Visit"
+
+msgid "Agregar a Favoritos"
+msgstr "Add to Favorites"
+
+msgid "Quitar de Favoritos"
+msgstr "Remove from Favorites"
+
+msgid "Ver Detalles"
+msgstr "View Details"
+
+msgid "Método de Pago"
+msgstr "Payment Method"
+
+msgid "Cuota Inicial"
+msgstr "Down Payment"
+
+msgid "Notas Adicionales"
+msgstr "Additional Notes"
+
+msgid "Confirmar Compra"
+msgstr "Confirm Purchase"
+
+msgid "Cancelar"
+msgstr "Cancel"
+
+msgid "Tarjeta de Crédito"
+msgstr "Credit Card"
+
+msgid "Tarjeta de Débito"
+msgstr "Debit Card"
+
+msgid "Transferencia Bancaria"
+msgstr "Bank Transfer"
+
+msgid "Efectivo"
+msgstr "Cash"
+
+msgid "Hipoteca"
+msgstr "Mortgage"
+
+msgid "Pendiente"
+msgstr "Pending"
+
+msgid "Aprobada"
+msgstr "Approved"
+
+msgid "Completada"
+msgstr "Completed"
+
+msgid "Cancelada"
+msgstr "Cancelled"
+
+msgid "Rechazada"
+msgstr "Rejected"
+
+msgid "Aprobar"
+msgstr "Approve"
+
+msgid "Rechazar"
+msgstr "Reject"
+
+msgid "Estado"
+msgstr "Status"
+
+msgid "Fecha"
+msgstr "Date"
+
+msgid "Acciones"
+msgstr "Actions"
+
+msgid "Comprador"
+msgstr "Buyer"
+
+msgid "Agente"
+msgstr "Agent"
+
+msgid "ID de Transacción"
+msgstr "Transaction ID"
+
+msgid "Razón del Rechazo"
+msgstr "Rejection Reason"
+
+msgid "Volver"
+msgstr "Back"
+
+msgid "Guardar"
+msgstr "Save"
+
+msgid "Eliminar"
+msgstr "Delete"
+
+msgid "Editar"
+msgstr "Edit"
+
+msgid "Crear"
+msgstr "Create"
+
+msgid "Buscar"
+msgstr "Search"
+
+msgid "Filtrar"
+msgstr "Filter"
+
+msgid "Ordenar por"
+msgstr "Sort by"
+
+msgid "Todos"
+msgstr "All"
+
+msgid "Ninguno"
+msgstr "None"
+
+msgid "Sí"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"
+
+msgid "Enviar"
+msgstr "Send"
+
+msgid "Mensaje"
+msgstr "Message"
+
+msgid "Conversaciones"
+msgstr "Conversations"
+
+msgid "Nueva Conversación"
+msgstr "New Conversation"
+
+msgid "Escribe un mensaje"
+msgstr "Write a message"
+
+msgid "Asistente"
+msgstr "Assistant"
+
+msgid "Usuario"
+msgstr "User"

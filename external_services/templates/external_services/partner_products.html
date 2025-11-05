@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}Productos Aliados - HouseMaster{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="bi bi-globe"></i> Productos de Nuestros Aliados
+            </h2>
+            
+            <!-- Estado del servicio -->
+            <div class="alert {% if service_available %}alert-success{% else %}alert-warning{% endif %} mb-4">
+                {% if service_available %}
+                    <i class="bi bi-check-circle"></i> Servicio aliado conectado
+                {% else %}
+                    <i class="bi bi-exclamation-triangle"></i> Servicio aliado no disponible
+                {% endif %}
+            </div>
+            
+            {% if result.success %}
+                <p class="lead">
+                    Mostrando <strong>{{ count }}</strong> producto(s) de nuestros socios comerciales.
+                </p>
+                
+                {% if products %}
+                    <div class="row">
+                        {% for product in products %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header bg-primary text-white">
+                                    <i class="bi bi-box-seam"></i> Producto Aliado #{{ product.id }}
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.title|default:"Sin título" }}</h5>
+                                    <p class="card-text text-muted small">
+                                        {% if product.body %}
+                                            {{ product.body|truncatewords:20 }}
+                                        {% elif product.description %}
+                                            {{ product.description|truncatewords:20 }}
+                                        {% else %}
+                                            Sin descripción disponible
+                                        {% endif %}
+                                    </p>
+                                    
+                                    {% if product.price %}
+                                    <p class="mb-2">
+                                        <strong>Precio:</strong> ${{ product.price|floatformat:2 }}
+                                    </p>
+                                    {% endif %}
+                                    
+                                    {% if product.location %}
+                                    <p class="mb-2">
+                                        <i class="bi bi-geo-alt"></i> {{ product.location }}
+                                    </p>
+                                    {% endif %}
+                                    
+                                    {% if product.url %}
+                                    <a href="{{ product.url }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                        <i class="bi bi-box-arrow-up-right"></i> Ver detalles
+                                    </a>
+                                    {% endif %}
+                                </div>
+                                <div class="card-footer text-muted small">
+                                    <i class="bi bi-building"></i> Usuario: {{ product.userId|default:"N/A" }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> No hay productos disponibles en este momento.
+                    </div>
+                {% endif %}
+                
+                <div class="card bg-light mt-4">
+                    <div class="card-body">
+                        <h6><i class="bi bi-info-circle"></i> Información del Servicio</h6>
+                        <p class="mb-0 small text-muted">
+                            <strong>Fuente:</strong> {{ result.source }}<br>
+                            <strong>Total de productos:</strong> {{ count }}<br>
+                            {% if result.note %}
+                            <strong>Nota:</strong> {{ result.note }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-danger">
+                    <h5><i class="bi bi-exclamation-triangle"></i> Error al Conectar</h5>
+                    <p>{{ result.message }}</p>
+                    <p class="mb-0 small"><strong>Error técnico:</strong> {{ result.error }}</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h5>¿Qué hacer?</h5>
+                        <ul>
+                            <li>Verifica que el servicio del equipo aliado esté activo</li>
+                            <li>Confirma la URL del API en <code>external_services/services.py</code></li>
+                            <li>Revisa tu conexión a internet</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

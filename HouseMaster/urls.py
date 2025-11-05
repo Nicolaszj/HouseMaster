@@ -18,8 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),  # Cambio de idioma
+    path('api/', include('property.api_urls')),  # API REST JSON (sin i18n)
+]
+
+urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('account/', include('account.urls')),
@@ -27,7 +33,9 @@ urlpatterns = [
     path('visits/', include('visits.urls')),
     path('purchases/', include('purchases.urls')),
     path('chat/', include('chatbot.urls')),
-]
+    path('', include('external_services.urls')),  # Servicios externos
+    prefix_default_language=True,  # URLs con prefijo de idioma
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

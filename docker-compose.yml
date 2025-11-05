@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: housemaster_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: housemaster_db
+      MYSQL_USER: housemaster_user
+      MYSQL_PASSWORD: housemaster_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    container_name: housemaster_web
+    command: gunicorn --bind 0.0.0.0:8000 --workers 3 HouseMaster.wsgi:application
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=tu-secret-key-aqui-cambiar-en-produccion
+      - DATABASE_ENGINE=django.db.backends.mysql
+      - DATABASE_NAME=housemaster_db
+      - DATABASE_USER=housemaster_user
+      - DATABASE_PASSWORD=housemaster_password
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  static_volume:
+  media_volume:
